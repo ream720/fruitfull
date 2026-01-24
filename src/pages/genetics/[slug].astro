@@ -1,0 +1,216 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Gallery from "../../components/Gallery.astro";
+
+export async function getStaticPaths() {
+  const genetics = (await getCollection("genetics")).sort((a, b) => {
+    const dateA = a.data.releaseDate ? new Date(a.data.releaseDate).getTime() : 0;
+    const dateB = b.data.releaseDate ? new Date(b.data.releaseDate).getTime() : 0;
+    return dateB - dateA;
+  });
+
+  return genetics.map((entry, index) => {
+    const prevEntry = index > 0 ? genetics[index - 1] : null;
+    const nextEntry = index < genetics.length - 1 ? genetics[index + 1] : null;
+
+    return {
+      params: { slug: entry.slug },
+      props: {
+        entry,
+        prevEntry,
+        nextEntry
+      },
+    };
+  });
+}
+
+const { entry, prevEntry, nextEntry } = Astro.props as {
+  entry: CollectionEntry<"genetics">;
+  prevEntry: CollectionEntry<"genetics"> | null;
+  nextEntry: CollectionEntry<"genetics"> | null;
+};
+
+// This gives you a renderable component for MDX body:
+const { Content } = await entry.render();
+const { data } = entry;
+---
+
+<BaseLayout
+  title={data.name}
+  description={`${data.name} - ${data.lineage} | Fruitfull Seeds`}
+  showBackLink={true}
+  backLinkText="Back to Genetics"
+  backLinkHref="/genetics"
+>
+  <article class="max-w-5xl mx-auto">
+    <!-- Hero Section -->
+    <header class="mb-12">
+      <div class="mb-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-ff-text-primary mb-3">{data.name}</h1>
+        <p class="text-xl md:text-2xl text-ff-text-secondary font-medium">{data.lineage}</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        {data.heroImage && (
+          <div class="flex justify-center w-full">
+            <img
+              src={data.heroImage}
+              alt={data.name}
+              class="w-auto h-auto max-w-full max-h-[500px] rounded-3xl shadow-2xl object-contain"
+              loading="eager"
+            />
+          </div>
+        )}
+
+        <div class="space-y-6">
+          {data.overview && (
+            <div class="p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
+              <h2 class="text-xl font-bold text-ff-text-primary mb-3">Overview</h2>
+              <p class="text-base text-ff-text-secondary leading-relaxed">{data.overview}</p>
+            </div>
+          )}
+
+
+
+          {data.gallery && data.gallery.length > 0 && (
+            <div class="p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
+              <h2 class="text-xl font-bold text-ff-text-primary mb-4">Gallery</h2>
+              <Gallery images={data.gallery} productName={data.name} />
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <!-- Left Column: Main Content -->
+      <div class="md:col-span-2">
+        {data.growNotes && (
+          <section class="mb-8 p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
+            <h2 class="text-2xl font-bold text-ff-text-primary mb-3">Grow Notes</h2>
+            <p class="text-lg text-ff-text-secondary leading-relaxed whitespace-pre-line">{data.growNotes}</p>
+          </section>
+        )}
+
+        {data.hashmakerNotes && (
+          <section class="mb-8 p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
+            <h2 class="text-2xl font-bold text-ff-text-primary mb-4">Hashmaker Notes</h2>
+            <p class="text-lg text-ff-text-secondary leading-relaxed mb-6">{data.hashmakerNotes}</p>
+
+            <div class="pt-4 border-t border-ff-border-subtle">
+              <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Resin Type</dt>
+                  <dd class="text-ff-text-secondary">{data.washMetrics.resinType}</dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Yield</dt>
+                  <dd class="text-ff-text-secondary">{data.washMetrics.yieldEstimate}</dd>
+                </div>
+                <div class="sm:col-span-2">
+                  <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Preferred Microns</dt>
+                  <dd class="text-ff-text-secondary">{data.washMetrics.preferredMicrons.join("µ, ")}µ</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+        )}
+
+        <section class="prose md:prose-lg max-w-none mb-8">
+          <Content />
+        </section>
+      </div>
+
+      <!-- Right Column: Sidebar Info -->
+      <div class="md:col-span-1 space-y-6">
+        <!-- Quick Stats -->
+        <section class="bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle p-6">
+          <h2 class="text-xl font-bold text-ff-text-primary mb-4 pb-2 border-b border-ff-border-subtle">Quick Stats</h2>
+          <dl class="space-y-4">
+            {data.releaseDate && (
+              <div>
+                <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Release Date</dt>
+                <dd class="text-ff-text-primary font-medium">{data.releaseDate}</dd>
+              </div>
+            )}
+            <div>
+              <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Status</dt>
+              <dd class="text-ff-text-primary font-medium capitalize">{data.status}</dd>
+            </div>
+          </dl>
+        </section>
+
+        <!-- Where to Find -->
+        <section class="bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle p-6">
+          <h2 class="text-xl font-bold text-ff-text-primary mb-4 pb-2 border-b border-ff-border-subtle">Where to Find</h2>
+          <ul class="space-y-3">
+            {data.whereToFind.map((w) => (
+              <li>
+                <a
+                  href={w.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="flex items-center gap-3 group"
+                >
+                  {w.logo ? (
+                    <img
+                      src={w.logo}
+                      alt={w.name}
+                      class="h-10 w-auto object-contain hover:opacity-80 transition-opacity"
+                    />
+                  ) : (
+                    <span class="text-ff-grape-vivid group-hover:text-ff-grape-neon transition-colors underline decoration-ff-grape-vivid/50 group-hover:decoration-ff-grape-neon font-medium">
+                      {w.name}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="border-t border-ff-border-subtle pt-8 mt-12 max-w-3xl mx-auto">
+      <div class="flex justify-between items-center">
+        {prevEntry ? (
+          <a
+            href={`/genetics/${prevEntry.slug}`}
+            class="group flex items-center space-x-3 px-4 py-3 bg-ff-bg-secondary hover:bg-ff-grape-vivid/10 rounded-ff-lg border border-ff-border-subtle hover:border-ff-grape-vivid transition-all"
+          >
+            <svg class="w-5 h-5 text-ff-grape-vivid group-hover:text-ff-grape-neon transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <div class="text-left">
+              <div class="text-sm text-ff-text-secondary">Previous</div>
+              <div class="font-semibold text-ff-text-primary group-hover:text-ff-grape-vivid transition-colors">{prevEntry.data.name}</div>
+            </div>
+          </a>
+        ) : (
+          <div></div>
+        )}
+
+        {nextEntry ? (
+          <a
+            href={`/genetics/${nextEntry.slug}`}
+            class="group flex items-center space-x-3 px-4 py-3 bg-ff-bg-secondary hover:bg-ff-grape-vivid/10 rounded-ff-lg border border-ff-border-subtle hover:border-ff-grape-vivid transition-all"
+          >
+            <div class="text-right">
+              <div class="text-sm text-ff-text-secondary">Next</div>
+              <div class="font-semibold text-ff-text-primary group-hover:text-ff-grape-vivid transition-colors">{nextEntry.data.name}</div>
+            </div>
+            <svg class="w-5 h-5 text-ff-grape-vivid group-hover:text-ff-grape-neon transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    </nav>
+  </article>
+</BaseLayout>

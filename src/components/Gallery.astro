@@ -1,0 +1,328 @@
+---
+interface Props {
+  images: string[];
+  productName: string;
+}
+
+const { images, productName } = Astro.props;
+---
+
+<div class="grid grid-cols-3 gap-2">
+  {images.map((image, index) => (
+    <img
+      src={image}
+      alt={`${productName} - Image ${index + 1}`}
+      class="w-full h-16 object-cover rounded border border-ff-border-subtle hover:border-ff-grape-vivid transition-colors cursor-pointer gallery-image"
+      loading="lazy"
+      data-gallery-index={index}
+      data-gallery-src={image}
+      data-gallery-alt={`${productName} - Image ${index + 1}`}
+    />
+  ))}
+</div>
+
+<!-- Modal HTML Structure -->
+<div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+  <!-- Modal Container -->
+  <div class="relative max-w-full max-h-full flex items-center justify-center">
+    <!-- Close Button -->
+    <button
+      id="modal-close"
+      class="absolute top-4 right-4 z-10 w-10 h-10 bg-black bg-opacity-50 hover:bg-opacity-75 rounded-full flex items-center justify-center text-white transition-all"
+      aria-label="Close modal"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Image Display Area -->
+    <div class="relative flex items-center justify-center w-full h-full">
+      <img
+        id="modal-image"
+        src=""
+        alt=""
+        class="max-w-[90vw] max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl transition-opacity duration-200"
+        style="opacity: 1;"
+      />
+
+      <!-- Image Counter -->
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-full text-sm font-medium">
+        <span id="modal-counter">1 / 1</span>
+      </div>
+    </div>
+
+    <!-- Navigation Arrows (will be shown/hidden based on gallery size) -->
+    <button
+      id="modal-prev"
+      class="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-75 rounded-full flex items-center justify-center text-white transition-all"
+      aria-label="Previous image"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <button
+      id="modal-next"
+      class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-75 rounded-full flex items-center justify-center text-white transition-all"
+      aria-label="Next image"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('gallery-modal') as HTMLElement | null;
+    const modalImage = document.getElementById('modal-image') as HTMLImageElement | null;
+    const modalCounter = document.getElementById('modal-counter') as HTMLElement | null;
+    const modalClose = document.getElementById('modal-close') as HTMLElement | null;
+    const modalPrev = document.getElementById('modal-prev') as HTMLElement | null;
+    const modalNext = document.getElementById('modal-next') as HTMLElement | null;
+    const galleryImages = document.querySelectorAll('.gallery-image');
+
+    // Early return if modal elements don't exist
+    if (!modal || !modalImage || !modalCounter || !modalClose || !modalPrev || !modalNext) {
+      // It's possible the component is loaded but no gallery images exist, or modal parts are missing
+      // console.warn('Gallery modal elements not found');
+      return;
+    }
+
+    // Modal state
+    let currentImageIndex: number = 0;
+    let galleryData: Array<{src: string, alt: string, index: number}> = [];
+    let originalFocusElement: Element | null = null;
+
+    // Touch handling state
+    let touchStartX: number = 0;
+    let touchEndX: number = 0;
+
+    // Prepare gallery data from gallery images
+    galleryImages.forEach((img, index) => {
+      const imgElement = img as HTMLImageElement;
+      galleryData.push({
+        src: imgElement.dataset.gallerySrc || imgElement.src || '',
+        alt: imgElement.dataset.galleryAlt || imgElement.alt || `Image ${index + 1}`,
+        index: index
+      });
+    });
+
+    // Function to update button visibility
+    function updateNavigationButtons(index: number): void {
+      if (!modalPrev || !modalNext) return;
+
+      // Hide Prev button if at start
+      if (index <= 0) {
+        modalPrev.classList.add('hidden');
+        modalPrev.classList.remove('flex');
+      } else {
+        modalPrev.classList.remove('hidden');
+        modalPrev.classList.add('flex');
+      }
+
+      // Hide Next button if at end
+      if (index >= galleryData.length - 1) {
+        modalNext.classList.add('hidden');
+        modalNext.classList.remove('flex');
+      } else {
+        modalNext.classList.remove('hidden');
+        modalNext.classList.add('flex');
+      }
+    }
+
+    // Function to load and display image in modal
+    function loadModalImage(imageIndex: number): void {
+      if (!modalImage || !modalCounter || galleryData.length === 0) return;
+
+      const imageData = galleryData[imageIndex];
+      if (!imageData) return;
+
+      // Show loading state (optional - could add a spinner here)
+      modalImage.style.opacity = '0.5';
+
+      // Create new image element to preload
+      const newImage = new Image();
+
+      newImage.onload = function() {
+        // Image loaded successfully
+        modalImage.src = imageData.src;
+        modalImage.alt = imageData.alt;
+        modalImage.style.opacity = '1';
+
+        // Update counter display
+        updateImageCounter(imageIndex);
+      };
+
+      newImage.onerror = function() {
+        // Handle image loading error
+        console.error('Failed to load image:', imageData.src);
+        modalImage.alt = 'Failed to load image';
+        modalImage.style.opacity = '1';
+
+        // Still update counter even if image fails
+        updateImageCounter(imageIndex);
+      };
+
+      // Start loading the image
+      newImage.src = imageData.src;
+    }
+
+    // Function to update image counter display
+    function updateImageCounter(imageIndex: number): void {
+      if (!modalCounter || galleryData.length === 0) return;
+
+      const currentNum = imageIndex + 1;
+      const totalNum = galleryData.length;
+      modalCounter.textContent = `${currentNum} / ${totalNum}`;
+    }
+
+    // Function to show previous image
+    function showPreviousImage(): void {
+      if (currentImageIndex > 0) {
+        currentImageIndex--;
+        loadModalImage(currentImageIndex);
+        updateNavigationButtons(currentImageIndex);
+      }
+    }
+
+    // Function to show next image
+    function showNextImage(): void {
+      if (currentImageIndex < galleryData.length - 1) {
+        currentImageIndex++;
+        loadModalImage(currentImageIndex);
+        updateNavigationButtons(currentImageIndex);
+      }
+    }
+
+    // Function to open modal with specific image
+    function openModal(imageIndex: number): void {
+      if (galleryData.length === 0 || !modal) return;
+
+      // Validate image index
+      if (imageIndex < 0 || imageIndex >= galleryData.length) {
+        console.warn('Invalid image index:', imageIndex);
+        return;
+      }
+
+      currentImageIndex = imageIndex;
+      originalFocusElement = document.activeElement;
+
+      // Load and display the image
+      loadModalImage(currentImageIndex);
+      updateNavigationButtons(currentImageIndex);
+
+      // Show modal with flex display for centering
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+
+      // Focus on modal for accessibility
+      modal.focus();
+    }
+
+    // Function to close modal
+    function closeModal(): void {
+      if (!modal) return;
+
+      // Hide modal
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      // Restore body scroll
+      document.body.style.overflow = '';
+
+      // Return focus to original element
+      if (originalFocusElement && 'focus' in originalFocusElement) {
+        (originalFocusElement as HTMLElement).focus();
+      }
+
+      // Reset image opacity
+      if (modalImage) {
+        modalImage.style.opacity = '1';
+      }
+    }
+
+    // Handle swipe gestures
+    function handleTouchStart(e: TouchEvent) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }
+
+    function handleSwipe() {
+      const swipeThreshold = 50; // minimum distance for swipe
+
+      if (touchEndX < touchStartX - swipeThreshold) {
+        // Swiped Left -> Next Image
+        showNextImage();
+      }
+
+      if (touchEndX > touchStartX + swipeThreshold) {
+        // Swiped Right -> Previous Image
+        showPreviousImage();
+      }
+    }
+
+    // Add click event handlers to gallery images
+    galleryImages.forEach((img, index) => {
+      img.addEventListener('click', function() {
+        openModal(index);
+      });
+    });
+
+    // Navigation button click handlers
+    if (modalPrev) {
+        modalPrev.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent closing modal if it propagates to background
+            showPreviousImage();
+        });
+    }
+
+    if (modalNext) {
+        modalNext.addEventListener('click', function(e) {
+            e.stopPropagation();
+            showNextImage();
+        });
+    }
+
+    // Touch events for swipe
+    modal.addEventListener('touchstart', handleTouchStart, { passive: true });
+    modal.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Close modal on close button click
+    if (modalClose) {
+      modalClose.addEventListener('click', closeModal);
+    }
+
+    // Close modal on backdrop click (clicking outside the image)
+    modal.addEventListener('click', function(e: Event) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Handle Keyboard events
+    document.addEventListener('keydown', function(e: KeyboardEvent) {
+      if (!modal || modal.classList.contains('hidden')) return;
+
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowLeft') {
+        showPreviousImage();
+      } else if (e.key === 'ArrowRight') {
+        showNextImage();
+      }
+    });
+
+    console.log('Gallery modal functionality initialized with', galleryData.length, 'images');
+  });
+</script>

@@ -1,0 +1,16 @@
+LANDING PAGE:
+-> Get Real Text Logo
+
+GENETICS CONTENT:
+-> Add and Review all genetics content info.
+-> Add all gallery photos.
+
+Add more theme colors into the UI design.
+
+Add Main Circular Logo somewhere appropriate  - DONE
+-> Added to header but it looks too wide potentially
+
+Plan system for customizable genetics pages css styles.
+
+Adjust library card styles to make top of info section rounded? - DONE
+Maybe make it look like it's coming out of a pack? - DONE

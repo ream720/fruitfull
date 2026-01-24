@@ -1,16 +1,128 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Fruitfull Seeds - Premium Genetics"
+  description="Discover premium genetics from Fruitfull Seeds. Explore our curated collection of hashmaker-focused strains with detailed wash metrics and grow notes."
+>
+  <!-- Hero Section -->
+  <div class="relative min-h-[45vh] flex items-center justify-center px-4 py-8 pb-24 overflow-hidden">
+    <!-- Subtle Background Effects -->
+    <div class="absolute inset-0 opacity-30 rounded-3xl overflow-hidden">
+      <div class="absolute top-20 left-1/4 w-96 h-96 bg-ff-grape-vivid rounded-full mix-blend-multiply filter blur-3xl"></div>
+      <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-ff-peach-soft rounded-full mix-blend-multiply filter blur-3xl"></div>
+    </div>
+
+    <!-- Background Logo -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
+      <img
+        src="/images/fruitfull/logo/Characters.png"
+        alt=""
+        class="w-[120%] max-w-5xl opacity-[0.08] object-contain scale-125"
+      />
+    </div>
+
+    <!-- Content Container -->
+    <div class="relative z-10 text-center max-w-5xl mx-auto space-y-4 md:space-y-6">
+
+
+      <!-- Main Heading -->
+      <div class="space-y-4 md:space-y-6">
+        <h1 class="font-extrabold leading-tight space-y-2">
+          <span class="block font-bubbly text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg filter" style="font-family: 'Titan One', cursive;">
+            <span class="block sm:inline whitespace-nowrap"><span class="text-[#FF8387]">F</span><span class="text-[#24FFE0]">r</span><span class="text-[#FFFD5D]">u</span><span class="text-[#5FE8FF]">i</span><span class="text-[#FFB579]">t</span><span class="text-[#A1FF62]">f</span><span class="text-[#FF8387]">u</span><span class="text-[#FFFF58]">l</span><span class="text-[#24FFE0]">l</span></span>
+            <span class="hidden sm:inline">&nbsp;</span>
+            <span class="block sm:inline whitespace-nowrap"><span class="text-[#60E4FF]">S</span><span class="text-[#FF8387]">e</span><span class="text-[#A1FF62]">e</span><span class="text-[#FFFD5D]">d</span><span class="text-[#24FFE0]">s</span></span>
+          </span>
+        </h1>
+
+        <div class="flex items-center justify-center gap-4">
+          <div class="h-px w-12 bg-ff-border-subtle"></div>
+          <p class="text-sm md:text-base tracking-[0.2em] uppercase text-ff-text-secondary font-medium">
+            Premium Genetics for Hashmakers
+          </p>
+          <div class="h-px w-12 bg-ff-border-subtle"></div>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="pt-2">
+        <a
+          href="/genetics"
+          class="inline-flex items-center gap-2 bg-ff-grape-vivid hover:bg-ff-grape-neon text-ff-text-primary font-bold px-8 sm:px-10 py-3 sm:py-4 rounded-ff-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base sm:text-lg"
+        >
+          Explore Genetics Library
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest & Upcoming Releases Section -->
+  <div class="relative z-10 px-4 py-12 md:py-16 -mt-16 md:-mt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+
+        <!-- Latest Release -->
+        <a href="/genetics/missing-bow" class="block group">
+          <div class="relative overflow-hidden rounded-ff-xl bg-ff-surface-elevated border border-ff-border-subtle transition-all duration-300 hover:border-ff-grape-vivid hover:shadow-xl hover:shadow-ff-grape-vivid/10">
+            <div class="aspect-[16/10] overflow-hidden relative">
+              <img
+                src="/images/genetics/missing-bow/hero.png"
+                alt="Missing Bow"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span class="absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2 border-ff-grape-vivid" style="box-shadow: 0 0 12px var(--ff-grape-vivid);">
+                Latest Release
+              </span>
+            </div>
+              <div class="p-5 space-y-2">
+                <h3 class="text-xl font-bold text-ff-text-primary group-hover:text-ff-grape-neon transition-colors">
+                  Missing Bow
+                </h3>
+                <p class="text-sm text-ff-text-secondary line-clamp-2">
+                  Rainbow Belts #6 × Grape Rainbow Pie #17
+                </p>
+                <div class="pt-2 flex items-center gap-2 text-ff-grape-neon text-sm font-medium">
+                  <span>View Details</span>
+                  <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </div>
+              </div>
+          </div>
+        </a>
+
+        <!-- Upcoming -->
+        <div class="block">
+          <div class="relative overflow-hidden rounded-ff-xl bg-ff-surface-elevated border border-ff-border-subtle">
+            <div class="aspect-[16/10] overflow-hidden relative">
+              <img
+                src="/images/genetics/tester-a/tester_a.png"
+                alt="Tester A - Coming Soon"
+                class="w-full h-full object-cover"
+              />
+              <span class="absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2" style="border-color: var(--ff-status-upcoming); box-shadow: 0 0 12px var(--ff-status-upcoming);">
+                Coming Soon
+              </span>
+            </div>
+              <div class="p-5 space-y-2">
+                <h3 class="text-xl font-bold text-ff-text-primary">
+                  Tester A
+                </h3>
+                <p class="text-sm text-ff-text-secondary">
+                  Mystery genetics in testing...
+                </p>
+                <div class="pt-2 flex items-center gap-2 text-ff-text-muted text-sm font-medium">
+                  <span>Details coming soon</span>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>

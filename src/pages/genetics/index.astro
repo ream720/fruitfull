@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const genetics = (await getCollection("genetics")).sort((a, b) => {
+  const dateA = a.data.releaseDate ? new Date(a.data.releaseDate).getTime() : 0;
+  const dateB = b.data.releaseDate ? new Date(b.data.releaseDate).getTime() : 0;
+  return dateB - dateA;
+});
+---
+
+<BaseLayout
+  title="Genetics Library - Fruitfull Seeds"
+  description="Browse our complete collection of premium genetics. Each strain includes detailed wash metrics, lineage information, and hashmaker notes."
+>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {genetics.map((g) => (
+        <a
+          href={`/genetics/${g.slug}`}
+          class="bg-ff-bg-secondary border border-ff-border-subtle rounded-ff-lg overflow-hidden hover:scale-[1.02] hover:border-ff-grape-vivid transition-all flex flex-col h-full"
+        >
+          {g.data.heroImage && (
+            <img
+              src={g.data.heroImage}
+              alt={`${g.data.name} hero`}
+              class="w-full h-48 object-cover object-top"
+            />
+          )}
+          <div class="p-6 flex flex-col flex-grow bg-ff-bg-secondary relative -mt-6 rounded-t-3xl z-10">
+            <div class="flex items-start justify-between mb-2">
+              <h2 class="text-2xl font-bold text-ff-text-primary">{g.data.name}</h2>
+              {g.data.releaseDate && (
+                <span class="text-xs text-ff-text-muted bg-ff-bg-tertiary px-2 py-1 rounded-ff-sm whitespace-nowrap ml-2">
+                  {g.data.releaseDate}
+                </span>
+              )}
+            </div>
+            <p class="text-ff-text-secondary mb-3 whitespace-normal break-words">{g.data.lineage}</p>
+            <p class="text-sm text-ff-text-muted line-clamp-3">{g.data.expressions}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
