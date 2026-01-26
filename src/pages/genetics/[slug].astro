@@ -54,13 +54,54 @@ const { data } = entry;
 
       <div class="grid md:grid-cols-2 gap-8 items-start">
         {data.heroImage && (
-          <div class="flex justify-center w-full">
-            <img
-              src={data.heroImage}
-              alt={data.name}
-              class="w-auto h-auto max-w-full max-h-[500px] rounded-3xl shadow-2xl object-contain"
-              loading="eager"
-            />
+          <div class="flip-card-container">
+            <div class="flip-card" id="heroFlipCard">
+              <!-- Front: Hero Image -->
+              <div class="flip-card-front">
+                <div class="card-image-wrapper">
+                  <img
+                    src={data.heroImage}
+                    alt={data.name}
+                    class="w-full h-full object-contain"
+                    loading="eager"
+                  />
+                </div>
+                <div class="flip-hint">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  <span>Tap to flip</span>
+                </div>
+              </div>
+              <!-- Back: Collectible Card Stats -->
+              <div class="flip-card-back">
+                <div class="card-back-logo">
+                  <img src="/images/fruitfull/logo/1.png" alt="Fruitfull Seeds" />
+                </div>
+                <div class="card-back-content">
+                  <h3 class="card-back-title">{data.name}</h3>
+                  <p class="card-back-lineage">{data.lineage}</p>
+                  <div class="card-back-stats">
+                    <div class="stat-row">
+                      <span class="stat-label">Status</span>
+                      <span class="stat-value status-badge" data-status={data.status}>{data.status}</span>
+                    </div>
+                    {data.releaseDate && (
+                      <div class="stat-row">
+                        <span class="stat-label">Released</span>
+                        <span class="stat-value">{data.releaseDate}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div class="flip-hint flip-hint-back">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  <span>Tap to flip back</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -126,23 +167,6 @@ const { data } = entry;
 
       <!-- Right Column: Sidebar Info -->
       <div class="md:col-span-1 space-y-6">
-        <!-- Quick Stats -->
-        <section class="bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle p-6">
-          <h2 class="text-xl font-bold text-ff-text-primary mb-4 pb-2 border-b border-ff-border-subtle">Quick Stats</h2>
-          <dl class="space-y-4">
-            {data.releaseDate && (
-              <div>
-                <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Release Date</dt>
-                <dd class="text-ff-text-primary font-medium">{data.releaseDate}</dd>
-              </div>
-            )}
-            <div>
-              <dt class="text-sm font-semibold text-ff-resin-gold uppercase tracking-wide mb-1">Status</dt>
-              <dd class="text-ff-text-primary font-medium capitalize">{data.status}</dd>
-            </div>
-          </dl>
-        </section>
-
         <!-- Where to Find -->
         <section class="bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle p-6">
           <h2 class="text-xl font-bold text-ff-text-primary mb-4 pb-2 border-b border-ff-border-subtle">Where to Find</h2>
@@ -214,3 +238,240 @@ const { data } = entry;
     </nav>
   </article>
 </BaseLayout>
+
+<style>
+  /* Flip Card Container */
+  .flip-card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .flip-card {
+    position: relative;
+    width: 100%;
+    display: grid;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    animation: wiggle 1s ease-in-out 0.5s;
+  }
+
+  .flip-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .flip-card-front {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .card-image-wrapper {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+    position: relative;
+    isolation: isolate;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .flip-card-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, var(--ff-grape-vivid), var(--ff-peach-soft), var(--ff-lime-soft));
+    z-index: -2;
+  }
+
+  .flip-card-back::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: linear-gradient(145deg, var(--ff-grape-deep), var(--ff-bg-secondary));
+    border-radius: calc(0.75rem - 3px);
+    z-index: -1;
+  }
+
+  /* Collectible Card Logo Background */
+  .card-back-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .card-back-logo img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+  }
+
+  /* Card Back Content */
+  .card-back-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+  }
+
+  .card-back-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--ff-text-primary), var(--ff-resin-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .card-back-lineage {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+    color: var(--ff-text-secondary);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .card-back-stats {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+  }
+
+  .stat-row:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ff-resin-gold);
+  }
+
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ff-text-primary);
+    text-transform: capitalize;
+  }
+
+  .status-badge[data-status="current"] {
+    color: var(--ff-status-current);
+  }
+
+  .status-badge[data-status="archived"] {
+    color: var(--ff-status-archived);
+  }
+
+  .status-badge[data-status="upcoming"] {
+    color: var(--ff-status-upcoming);
+  }
+
+  /* Flip Hint */
+  .flip-hint {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    color: var(--ff-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeInHint 0.5s ease-out 1.5s forwards;
+    transition: opacity 0.3s ease;
+  }
+
+  .flip-hint-back {
+    animation: none;
+    opacity: 1;
+  }
+
+  .flip-card:hover .flip-hint {
+    opacity: 1;
+  }
+
+  /* Wiggle Animation */
+  @keyframes wiggle {
+    0%, 100% { transform: rotateY(0deg); }
+    20% { transform: rotateY(-8deg); }
+    40% { transform: rotateY(6deg); }
+    60% { transform: rotateY(-4deg); }
+    80% { transform: rotateY(2deg); }
+  }
+
+  @keyframes fadeInHint {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Hover lift effect */
+  .flip-card:not(.flipped):hover {
+    transform: translateY(-5px) rotateY(5deg);
+  }
+
+  .flip-card.flipped:hover {
+    transform: rotateY(180deg) translateY(-5px);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const flipCard = document.getElementById('heroFlipCard');
+    if (flipCard) {
+      flipCard.addEventListener('click', () => {
+        flipCard.classList.toggle('flipped');
+      });
+    }
+  });
+</script>

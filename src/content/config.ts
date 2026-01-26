@@ -6,7 +6,7 @@ const genetics = defineCollection({
     name: z.string(),
     lineage: z.string(),
 
-    status: z.enum(["current", "archived", "upcoming"]),
+    status: z.enum(["1st Edition", "Promo"]),
     category: z.enum(["breeder_cut", "release", "tester", "collab"]),
 
     releaseDate: z.string().optional(),
