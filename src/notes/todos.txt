@@ -1,33 +1,75 @@
 LANDING PAGE:
--> Get Real Text Logo
--> Swap COMING SOON with Purple Peelz
+-> Get Real Text Logo Done
+--> Fix Landing Page Layout with new Word Logo
 
 GENETICS CONTENT:
--> Add and Review all genetics content info.
--> Add all gallery photos.
+-> Add and Review all genetics content info. Done-ish
+-> Add all gallery CLIPS. WIP
 -> Add slight click delay to card flip to avoid css animation clash issue
 -> Might be some odd slant bug on mobile layout when cards orient
 
-Add more theme colors into the UI design.
 
-Plan system for customizable genetics pages css styles.
-
-
-???
+QUESTIONS TO BE ANSWERED:
 ABOUT PAGE:
 -> Add content
 -> What content? All socials?
 
 COMING SOON:
 Purple Peelz Feb 20th
-
 Tuesday Launch Clone?
 
-
-Long Term:
+LONG TERM:
 Clones vs Seeds
 "Generations" or "Volumes"?
 
-
 MISC:
  GRAPE RAINBOW PIE????
+
+Deprioritized:
+Add more theme colors into the UI design.
+
+Plan system for customizable genetics pages css styles.
+
+
+BUGS:
+
+Can see back of card before front loads?
+(test using network throttling)
+
+Countdown to release for purple peelz?
+
+
+
+PRIORITY NOW:
+#1. Finish the clips for all genetics.
+-- Add clips for:
+    -> Jelly Raunchers
+    -> Missing Bow (Done)
+    -> Berry Mist
+    -> Peach Frozeti
+    -> Watermelon Welchz
+    -> Rainbow Juice
+    -> Pinkalicious
+    -> Oops All Berries
+    -> Ms. Frizzle
+    -> RG5S1
+    -> Purple Peelz (UPCOMING - Feb 20th)
+
+PUSH/UPDATE SITE
+
+#2. Swap Tester B graphic for Purple Peelz pack on landing page.
+
+PUSH/UPDATE SITE
+
+#3. About Mr.Autogrow / Fruitfull Genetics page
+
+PUSH/UPDATE SITE
+
+#4. Add tabs to Genetics page.
+-- Add Seeds tab to Genetics page.
+-- Move all current genetics to Seeds tab.
+-- Add Cuts tab to Genetics page.
+-- Add a "Coming Soon" section to the Cuts tab.
+
+#5. Add Purple Peelz genetics to the site.
+-- Add Purple Peelz to the genetics page.

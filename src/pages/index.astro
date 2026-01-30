@@ -30,11 +30,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <!-- Main Heading -->
       <div class="space-y-4 md:space-y-6">
         <h1 class="font-extrabold leading-tight space-y-2">
-          <span class="block font-bubbly text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg filter" style="font-family: 'Titan One', cursive;">
-            <span class="block sm:inline whitespace-nowrap"><span class="text-[#FF8387]">F</span><span class="text-[#24FFE0]">r</span><span class="text-[#FFFD5D]">u</span><span class="text-[#5FE8FF]">i</span><span class="text-[#FFB579]">t</span><span class="text-[#A1FF62]">f</span><span class="text-[#FF8387]">u</span><span class="text-[#FFFF58]">l</span><span class="text-[#24FFE0]">l</span></span>
-            <span class="hidden sm:inline">&nbsp;</span>
-            <span class="block sm:inline whitespace-nowrap"><span class="text-[#60E4FF]">S</span><span class="text-[#FF8387]">e</span><span class="text-[#A1FF62]">e</span><span class="text-[#FFFD5D]">d</span><span class="text-[#24FFE0]">s</span></span>
-          </span>
+          <img
+            src="/images/fruitfull/logo/Letters.png"
+            alt="Fruitfull Seeds"
+            class="mx-auto w-full max-w-xs drop-shadow-lg filter"
+          />
         </h1>
 
         <div class="flex items-center justify-center gap-4">
@@ -50,16 +50,59 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="pt-2">
         <a
           href="/genetics"
-          class="inline-flex items-center gap-2 bg-ff-grape-vivid hover:bg-ff-grape-neon text-ff-text-primary font-bold px-8 sm:px-10 py-3 sm:py-4 rounded-ff-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base sm:text-lg"
+          id="explore-cta"
+          class="group relative inline-flex items-center gap-2 bg-ff-grape-vivid hover:bg-ff-grape-neon text-ff-text-primary font-bold px-8 sm:px-10 py-3 sm:py-4 rounded-ff-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base sm:text-lg"
         >
           Explore Genetics Library
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
+
+          <!-- Cute Sprite Charm -->
+          <img
+            id="cta-sprite"
+            src="/images/fruitfull/sprites/sprite_berry_mist.png"
+            alt=""
+            class="absolute -top-6 -right-6 w-12 h-12 object-contain filter drop-shadow-md transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 pointer-events-none"
+          />
         </a>
       </div>
     </div>
   </div>
+
+  <script>
+    const sprites = [
+      "/images/fruitfull/sprites/sprite_berry_mist.png",
+      "/images/fruitfull/sprites/sprite_jelly_raunchers.png",
+      "/images/fruitfull/sprites/sprite_missing_bow.png",
+      "/images/fruitfull/sprites/sprite_ms_frizzle.png",
+      "/images/fruitfull/sprites/sprite_oops_all_berries.png",
+      "/images/fruitfull/sprites/sprite_peach_frozeti.png",
+      "/images/fruitfull/sprites/sprite_pinkalicious.PNG",
+      "/images/fruitfull/sprites/sprite_rainbow_juice.png",
+      "/images/fruitfull/sprites/sprite_rg5s1.png",
+      "/images/fruitfull/sprites/sprite_watermelon_welchz.png"
+    ];
+
+    const btn = document.getElementById('explore-cta');
+    const spriteImg = document.getElementById('cta-sprite') as HTMLImageElement;
+
+    if (btn && spriteImg) {
+      // Preload images to prevent flickering
+      sprites.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+
+      btn.addEventListener('mouseenter', () => {
+        // Pick a random sprite different from the current one if possible,
+        // or just random. Random is fine.
+        const randomSprite = sprites[Math.floor(Math.random() * sprites.length)];
+        spriteImg.src = randomSprite;
+      });
+    }
+  </script>
+
 
   <!-- Latest & Upcoming Releases Section -->
   <div class="relative z-10 px-4 py-12 md:py-16 -mt-16 md:-mt-20">
