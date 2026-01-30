@@ -30,6 +30,8 @@ Add more theme colors into the UI design.
 
 Plan system for customizable genetics pages css styles.
 
+Add frame around video player on genetics page with sprites?
+
 
 BUGS:
 
@@ -43,11 +45,11 @@ Countdown to release for purple peelz?
 PRIORITY NOW:
 #1. Finish the clips for all genetics.
 -- Add clips for:
-    -> Jelly Raunchers
+    -> Jelly Raunchers (Done)
     -> Missing Bow (Done)
     -> Berry Mist
     -> Peach Frozeti
-    -> Watermelon Welchz
+    -> Watermelon Welchz (Done)
     -> Rainbow Juice
     -> Pinkalicious
     -> Oops All Berries
