@@ -37,6 +37,7 @@ const genetics = defineCollection({
 
     heroImage: z.string().optional(),
     gallery: z.array(z.string()).optional(),
+    videos: z.array(z.string()).optional(),
   }),
 });
 

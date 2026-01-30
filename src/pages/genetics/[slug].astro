@@ -115,10 +115,10 @@ const { data } = entry;
 
 
 
-          {data.gallery && data.gallery.length > 0 && (
+          {(data.gallery?.length || data.videos?.length) && (
             <div class="p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
               <h2 class="text-xl font-bold text-ff-text-primary mb-4">Gallery</h2>
-              <Gallery images={data.gallery} productName={data.name} />
+              <Gallery images={data.gallery || []} videos={data.videos || []} productName={data.name} />
             </div>
           )}
         </div>
