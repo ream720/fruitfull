@@ -12,9 +12,13 @@ export async function getStaticPaths() {
     return dateB - dateA;
   });
 
-  return genetics.map((entry, index) => {
-    const prevEntry = index > 0 ? genetics[index - 1] : null;
-    const nextEntry = index < genetics.length - 1 ? genetics[index + 1] : null;
+  return genetics.map((entry) => {
+    // Filter to only include items in the same category for prev/next navigation
+    const sameCategoryItems = genetics.filter(g => g.data.category === entry.data.category);
+    const indexInCategory = sameCategoryItems.findIndex(g => g.slug === entry.slug);
+
+    const prevEntry = indexInCategory > 0 ? sameCategoryItems[indexInCategory - 1] : null;
+    const nextEntry = indexInCategory < sameCategoryItems.length - 1 ? sameCategoryItems[indexInCategory + 1] : null;
 
     return {
       params: { slug: entry.slug },
