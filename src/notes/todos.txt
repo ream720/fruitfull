@@ -34,6 +34,7 @@ Add frame around video player on genetics page with sprites?
 
 
 BUGS:
+Add loader for whole site/index landing page etc.
 
 Can see back of card before front loads?
 (test using network throttling)
@@ -45,17 +46,19 @@ Countdown to release for purple peelz?
 PRIORITY NOW:
 #1. Finish the clips for all genetics.
 -- Add clips for:
-    -> Jelly Raunchers (Done)
-    -> Missing Bow (Done)
     -> Berry Mist
     -> Peach Frozeti
-    -> Watermelon Welchz (Done)
-    -> Rainbow Juice
     -> Pinkalicious
-    -> Oops All Berries
-    -> Ms. Frizzle
-    -> RG5S1
+    -> Jelly Raunchers (Done)
+    -> Missing Bow (Done)
+    -> Watermelon Welchz (Done)
+    -> Rainbow Juice (Done)
+    -> Oops All Berries (Done)
+    -> Ms. Frizzle (Done)
+    -> RG5S1 (Done)
+
     -> Purple Peelz (UPCOMING - Feb 20th)
+
 
 PUSH/UPDATE SITE
 
