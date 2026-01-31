@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About - Fruitfull Seeds" description="Learn about Fruitfull Seeds and our mission.">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="space-y-8">
+
+      <!-- Hero/Intro -->
+      <div class="text-center space-y-4">
+        <h1 class="font-display text-4xl md:text-5xl text-ff-text-primary flex flex-col md:flex-row items-center justify-center gap-4">
+          <img src="/images/fruitfull/logo/Letters.png" alt="About Fruitfull Seeds" class="h-20 md:h-24 object-contain drop-shadow-lg filter" />
+        </h1>
+      </div>
+
+      <!-- Main Content Card -->
+      <div class="bg-ff-surface-elevated rounded-ff-xl p-8 md:p-12 border border-ff-border-subtle shadow-sm">
+        <div class="prose prose-lg prose-invert max-w-none text-ff-text-secondary">
+          <p class="leading-relaxed">
+            Fruitfull Seeds was started by <span class="text-ff-text-primary font-bold">Mr. Autogrow</span>, a single source hashmaker from Kentucky.
+            Most known for his selection of <span class="text-ff-grape-neon">Rainbow Guava #5</span>, Mr. Autogrow began breeding to find and create unique and diverse fruit terps with an emphasis on solventless production.
+          </p>
+
+          <p class="leading-relaxed mt-6">
+            Using only his own selections, Mr. Autogrow launched Fruitfull Seeds in <span class="text-ff-text-primary font-bold">February 2025</span> with the first release of his <span class="text-ff-grape-vivid font-medium">Grape Rainbow Pie Line</span>.
+          </p>
+
+          <p class="leading-relaxed mt-6">
+            At Fruitfull Seeds, we release one strain at a time and each pack comes with an exclusive promo freebie pack. Each strain is released one time only in limited amount through <a href="https://rockymountainhigh719.org" target="_blank" rel="noopener noreferrer" class="text-ff-grape-neon hover:underline decoration-ff-grape-neon/50 underline-offset-4">Rocky Mountain High 719</a>.
+          </p>
+
+          <div class="mt-8 p-6 bg-ff-bg-secondary rounded-lg border border-ff-border-subtle">
+            <p class="m-0 text-sm font-medium flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ff-grape-vivid flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>
+                More exclusive info, giveaways and sneak peaks can be found via the <a href="https://discord.gg/87u5nCm9" target="_blank" rel="noopener noreferrer" class="text-ff-grape-neon hover:text-ff-grape-vivid transition-colors">Fruitfull Seeds Discord</a>.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

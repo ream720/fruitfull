@@ -79,14 +79,15 @@ Add clips for:
 ---
 
 ## 2️⃣ Swap Tester B Graphic
-- [ ] Replace **Tester B** graphic with **Purple Peelz** pack on landing page
+- [x] Replace **Tester B** graphic with **Purple Peelz** pack on landing page
 
 ➡️ **Push / Update Site**
 
 ---
 
 ## 3️⃣ About Page
-- [ ] Add **Mr. Autogrow / Fruitfull Genetics** content
+- [x] Add **Mr. Autogrow / Fruitfull Genetics** content
+- [ ] Add **Mr. Autogrow / Fruitfull Genetics** SOCIALS
 
 ➡️ **Push / Update Site**
 
