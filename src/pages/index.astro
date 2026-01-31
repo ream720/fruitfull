@@ -101,6 +101,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         spriteImg.src = randomSprite;
       });
     }
+
+    // Countdown Logic
+    const countdownEl = document.getElementById('release-countdown');
+    if (countdownEl) {
+      // Feb 20, 2026 at 4:20 PM MST (UTC-7)
+      // Note: MST is UTC-7. 4:20 PM is 16:20.
+      const targetDate = new Date('2026-02-20T16:20:00-07:00').getTime();
+
+      const updateCountdown = () => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          countdownEl.textContent = "NOW LIVE";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Format: "20d 04h 20m 05s"
+        countdownEl.textContent = `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+      };
+
+      // Initial call
+      updateCountdown();
+      // Update every second
+      setInterval(updateCountdown, 1000);
+    }
   </script>
 
 
@@ -144,23 +175,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <div class="relative overflow-hidden rounded-ff-xl bg-ff-surface-elevated border border-ff-border-subtle">
             <div class="aspect-[16/10] overflow-hidden relative">
               <img
-                src="/images/genetics/tester-b/hero.png"
-                alt="Tester B - Coming Soon"
+                src="/images/genetics/purple-peelz/hero_screenshot.png"
+                alt="Purple Peelz - Coming Soon"
                 class="w-full h-full object-cover"
               />
-              <span class="absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2" style="border-color: var(--ff-status-upcoming); box-shadow: 0 0 12px var(--ff-status-upcoming);">
-                Coming Soon
+              <span id="release-countdown" class="text-center min-w-[100px] absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2" style="border-color: var(--ff-status-upcoming); box-shadow: 0 0 12px var(--ff-status-upcoming); font-variant-numeric: tabular-nums;">
+                Feb 20
               </span>
             </div>
               <div class="p-5 space-y-2">
                 <h3 class="text-xl font-bold text-ff-text-primary">
-                  Tester B
+                  Purple Peelz
                 </h3>
                 <p class="text-sm text-ff-text-secondary">
-                  Mystery genetics in testing...
+                  Coming Soon
                 </p>
                 <div class="pt-2 flex items-center gap-2 text-ff-text-muted text-sm font-medium">
-                  <span>Releasing Feb 20</span>
+                  <span>Releasing Feb 20 4:20 PM MST</span>
               </div>
           </div>
         </div>
