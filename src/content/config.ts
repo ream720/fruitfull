@@ -15,7 +15,7 @@ const genetics = defineCollection({
     stretch: z.enum(["low", "medium", "high"]),
     biomassYield: z.enum(["low", "medium", "high"]).optional(),
 
-    expressions: z.string(),
+    expressions: z.string().optional(),
     overview: z.string().optional(),
     growNotes: z.string().optional(),
     hashmakerNotes: z.string().optional(),

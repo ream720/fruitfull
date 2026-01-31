@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -16,9 +17,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <!-- Background Logo -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
-      <img
+      <Image
         src="/images/fruitfull/logo/Characters.png"
         alt=""
+        width={1280}
+        height={1280}
         class="w-[120%] max-w-5xl opacity-[0.08] object-contain scale-125"
       />
     </div>
@@ -30,9 +33,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <!-- Main Heading -->
       <div class="space-y-4 md:space-y-6">
         <h1 class="font-extrabold leading-tight space-y-2">
-          <img
+          <Image
             src="/images/fruitfull/logo/Letters.png"
             alt="Fruitfull Seeds"
+            width={400}
+            height={120}
             class="mx-auto w-full max-w-xs drop-shadow-lg filter"
           />
         </h1>
@@ -144,9 +149,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <a href="/genetics/missing-bow" class="block group">
           <div class="relative overflow-hidden rounded-ff-xl bg-ff-surface-elevated border border-ff-border-subtle transition-all duration-300 hover:border-ff-grape-vivid hover:shadow-xl hover:shadow-ff-grape-vivid/10">
             <div class="aspect-[16/10] overflow-hidden relative">
-              <img
+              <Image
                 src="/images/genetics/missing-bow/hero.png"
                 alt="Missing Bow"
+                width={960}
+                height={600}
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <span class="absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2 border-ff-grape-vivid" style="box-shadow: 0 0 12px var(--ff-grape-vivid);">
@@ -174,9 +181,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="block">
           <div class="relative overflow-hidden rounded-ff-xl bg-ff-surface-elevated border border-ff-border-subtle">
             <div class="aspect-[16/10] overflow-hidden relative">
-              <img
+              <Image
                 src="/images/genetics/purple-peelz/hero_screenshot.png"
                 alt="Purple Peelz - Coming Soon"
+                width={960}
+                height={600}
                 class="w-full h-full object-cover"
               />
               <span id="release-countdown" class="text-center min-w-[100px] absolute top-3 left-3 px-3 py-1.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-full border-2" style="border-color: var(--ff-status-upcoming); box-shadow: 0 0 12px var(--ff-status-upcoming); font-variant-numeric: tabular-nums;">

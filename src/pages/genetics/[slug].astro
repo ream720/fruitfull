@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -59,9 +60,11 @@ const { data } = entry;
               <!-- Front: Hero Image -->
               <div class="flip-card-front">
                 <div class="card-image-wrapper">
-                  <img
+                  <Image
                     src={data.heroImage}
                     alt={data.name}
+                    width={800}
+                    height={800}
                     class="w-full h-full object-contain"
                     loading="eager"
                   />
@@ -76,7 +79,7 @@ const { data } = entry;
               <!-- Back: Collectible Card Stats -->
               <div class="flip-card-back">
                 <div class="card-back-logo">
-                  <img src="/images/fruitfull/logo/1.png" alt="Fruitfull Seeds" />
+                  <Image src="/images/fruitfull/logo/1.png" alt="Fruitfull Seeds" width={400} height={400} />
                 </div>
                 <div class="card-back-content">
                   <h3 class="card-back-title">{data.name}</h3>

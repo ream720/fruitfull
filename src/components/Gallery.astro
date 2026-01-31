@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   images: string[];
   videos?: string[];
@@ -41,9 +43,11 @@ const mediaItems = [
            </div>
          </div>
       ) : (
-        <img
+        <Image
           src={item.src}
           alt={`${productName} - Image ${index + 1}`}
+          width={128}
+          height={64}
           class="w-full h-full object-cover"
           loading="lazy"
         />
@@ -69,7 +73,7 @@ const mediaItems = [
 
     <!-- Loading Spinner -->
     <div id="modal-loading" class="absolute inset-0 flex items-center justify-center z-40 hidden pointer-events-none">
-        <img src="/images/fruitfull/logo/1.png" class="w-20 h-20 aspect-square object-contain animate-spin-slow opacity-80" alt="Loading..." />
+        <Image src="/images/fruitfull/logo/1.png" width={80} height={80} class="w-20 h-20 aspect-square object-contain animate-spin-slow opacity-80" alt="Loading..." />
     </div>
 
     <!-- Image Display Area -->

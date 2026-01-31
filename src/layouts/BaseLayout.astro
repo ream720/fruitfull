@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
 
@@ -38,7 +39,7 @@ const {
         <nav class="flex items-center justify-between">
           <div class="flex items-center space-x-6">
             <a href="/" class="block transition-transform hover:scale-105">
-              <img src="/images/fruitfull/logo/1.png" alt="Fruitfull Seeds" class="h-16 w-16 aspect-square object-contain" />
+              <Image src="/images/fruitfull/logo/1.png" alt="Fruitfull Seeds" width={64} height={64} class="h-16 w-16 aspect-square object-contain" />
             </a>
             <div class="flex space-x-4">
               <a href="/genetics" class="text-ff-text-secondary hover:text-ff-text-primary transition-colors">
