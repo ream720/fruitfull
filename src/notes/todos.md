@@ -62,9 +62,9 @@
 
 ## 1️⃣ Finish Clips for All Genetics
 Add clips for:
-- [ ] Berry Mist
-- [ ] Peach Frozeti
-- [ ] Pinkalicious
+- [x] Berry Mist
+- [x] Peach Frozeti
+- [x] Pinkalicious
 - [x] Jelly Raunchers
 - [x] Missing Bow
 - [x] Watermelon Welchz
