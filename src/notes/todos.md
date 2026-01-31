@@ -51,10 +51,11 @@
 ---
 
 ## 🐞 Bugs
+- [ ] If on breeder cut page, back should nav back with Breeder Cuts tab active instead of Seeds
 - [ ] Add loader for whole site / index / landing page
 - [ ] Back of card visible before front loads
   - Test using network throttling
-- [ ] Countdown to release for **Purple Peelz**
+
 
 ---
 

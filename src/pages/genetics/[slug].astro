@@ -42,7 +42,7 @@ const { data } = entry;
   description={`${data.name} - ${data.lineage} | Fruitfull Seeds`}
   showBackLink={true}
   backLinkText="Back to Genetics"
-  backLinkHref="/genetics"
+  backLinkHref={data.category === "breeder_cut" ? "/genetics#breeder-cuts" : "/genetics"}
 >
   <article class="max-w-5xl mx-auto">
     <!-- Hero Section -->
@@ -109,7 +109,7 @@ const { data } = entry;
           {data.overview && (
             <div class="p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
               <h2 class="text-xl font-bold text-ff-text-primary mb-3">Overview</h2>
-              <p class="text-base text-ff-text-secondary leading-relaxed">{data.overview}</p>
+              <p class="text-base text-ff-text-secondary leading-relaxed whitespace-pre-line">{data.overview}</p>
             </div>
           )}
 
@@ -139,7 +139,7 @@ const { data } = entry;
         {data.hashmakerNotes && (
           <section class="mb-8 p-6 bg-ff-bg-secondary rounded-ff-lg border border-ff-border-subtle">
             <h2 class="text-2xl font-bold text-ff-text-primary mb-4">Hashmaker Notes</h2>
-            <p class="text-lg text-ff-text-secondary leading-relaxed mb-6">{data.hashmakerNotes}</p>
+            <p class="text-lg text-ff-text-secondary leading-relaxed mb-6 whitespace-pre-line">{data.hashmakerNotes}</p>
 
             <div class="pt-4 border-t border-ff-border-subtle">
               <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
